@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show item</title>
+</head>
+<body>
+<p th:text="'Item: ' + ${item.getName()} + ' prise: ' + ${item.getPrise()}"></p>
+<br/>
+<hr/>
+<div th:if="${owner}">
+    <span>Item belongs: </span> <span th:text="${owner.getFullName()}">Person name</span>
+    <form th:method="PATCH" th:action="@{/items/{id}/release(id=${item.getId()})}">
+        <input type="submit" value="Release item"/>
+    </form>
+</div>
+
+<div th:if="${people}">
+    <span>The object does not belong to anyone</span>
+    <form th:method="PATCH" th:action="@{/items/{id}/assign(id=${item.getId()})}">
+        <label for="person">Select person</label>
+        <select th:object="${person}" th:field="*{id}" id="person">
+            <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">
+            </option>
+        </select>
+
+        <input type="submit" value="Assign item"/>
+    </form>
+</div>
+
+<form th:method="GET" th:action="@{/items/{id}/edit(id=${item.getId()})}">
+    <input type="submit" value="Edit item">
+</form>
+
+<form th:method="DELETE" th:action="@{/items/{id}(id=${item.getId()})}">
+    <input type="submit" value="Delete item">
+</form>
+
+<hr/>
+
+<a href="/items">back</a>
+
+</body>
+</html>

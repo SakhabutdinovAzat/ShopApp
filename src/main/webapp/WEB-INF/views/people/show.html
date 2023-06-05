@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Person</title>
+</head>
+<body>
+<p th:text="'Full name: ' + ${person.getFullName()}">Full name</p>
+<p th:text="'Age: ' + ${person.getAge()}">Age</p>
+<p th:text="'Email: ' + ${person.getEmail()}">Email</p>
+<p th:text="'Address: ' + ${person.getAddress()}">Address</p>
+<p th:text="'Date of birth: ' + ${person.getDateOfBirth()}">Date of birth</p>
+
+<div th:if="${items.isEmpty()}">
+    <p>Person hasn't items</p>
+    <hr/>
+</div>
+
+<div th:if="${!items.isEmpty()}">
+    <hr/>
+    <p>Items:</p>
+    <table th:each="item : ${items}">
+        <tr>
+            <span th:text="${item.getName()} + ', ' + ${item.getPrise()}"
+            th:style="${item.isExpired()} ? 'color: red' : 'color: black'">
+                item
+            </span>
+        </tr>
+    </table>
+    <hr/>
+</div>
+
+<a href="/people">back</a>
+
+<form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
+    <input type="submit" value="Edit person"/>
+</form>
+
+<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+    <input type="submit" value="Delete person"/>
+</form>
+</body>
+</html>

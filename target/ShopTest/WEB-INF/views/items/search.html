@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/items/search}">
+    <label for="query">Enter a search term: </label>
+    <input type="text" id="query" name="query"/>
+    <input type="submit" value="Search">
+</form>
+
+<div th:each="item : ${items}">
+    <b><p th:text="${item.getName() + ', ' + item.getPrise()}">Item<p/>
+    </b>
+
+    <div th:if="${item.getOwner() != null}">
+        <span>Item belongs: </span> <span th:text="${item.getOwner().getFullName()}"> Person full name</span>
+    </div>
+
+    <div th:if="${item.getOwner() == null}">
+        <span>Item is free</span>
+    </div>
+</div>
+
+<hr/>
+
+<a href="/items">back</a>
+
+</body>
+</html>
